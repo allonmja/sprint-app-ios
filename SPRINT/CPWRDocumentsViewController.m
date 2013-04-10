@@ -52,11 +52,9 @@
 
 - (void) viewWillAppear:(BOOL)animated
 {
-    
     [self refreshTables];
     [self retrieveRecentPrinters];
     [self addToRecentPrinters];
-    
 }
 
 
@@ -181,20 +179,6 @@
         // Get filtered documents
         [self setFilteredDocuments:[NSMutableArray arrayWithCapacity:documents.count]];
     }
-    
-    NSLog(@"Count of document: %i", documents.count);
-    
-    if(documents.count == 0)
-    {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"No Documents in queue", @"AlertView")
-                                                            message:NSLocalizedString(@"Send document(s) to SPRINT printer on your computer.", @"AlertView")
-                                                           delegate:self
-                                                  cancelButtonTitle:NSLocalizedString(@"OK", @"AlertView")
-                                                  otherButtonTitles:nil];
-        [alertView show];
-    }
-    
-    
     
 }
 
@@ -486,16 +470,16 @@
         i++;
     }
     
-    if(jsonObject.count > 0)
+    NSLog(@"Count of document: %i", documents.count);
+    
+    if(documents.count == 0)
     {
-        NSString *message = @"No document in queue to be printed!";
-        UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle:@"No Documents Found!"
-                              message:message
-                              delegate:nil
-                              cancelButtonTitle:@"OK"
-                              otherButtonTitles:nil];
-        [alert show];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"No Documents in queue", @"AlertView")
+                                                            message:NSLocalizedString(@"Send document(s) to SPRINT printer on your computer.", @"AlertView")
+                                                           delegate:self
+                                                  cancelButtonTitle:NSLocalizedString(@"OK", @"AlertView")
+                                                  otherButtonTitles:nil];
+        [alertView show];
     }
     
     [CompuwareUEM leaveAction:@"Load Jobs"];
