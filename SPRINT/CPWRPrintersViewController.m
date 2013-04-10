@@ -282,14 +282,14 @@
     
     if(tableView == [[self searchDisplayController] searchResultsTableView])
     {
-        if (indexPath.section==1){
+        //if (indexPath.section==1){
             [self setPrinterImage:self.filteredPrinters[indexPath.row][@"type"] withImageView:cell.printerImageView];
             //cell.printerLocationLabel.text   = self.filteredPrinters[indexPath.row][@"location"];
             cell.printerNameLabel.text      = self.filteredPrinters[indexPath.row][@"name"];
             cell.printerNameLabel.lineBreakMode = UILineBreakModeWordWrap;
             cell.printerNameLabel.numberOfLines = 2;
-        }
-        [self.tableView setRowHeight:82];
+            [self.tableView setRowHeight:200];
+        //}
     } else {
         switch (indexPath.section) {
             case 1:
@@ -425,6 +425,7 @@
                 break;
                 
             default:
+                [[segue destinationViewController] setPrinterName:self.filteredPrinters[indexPath.row][@"name"]];
                 break;
         }
         
