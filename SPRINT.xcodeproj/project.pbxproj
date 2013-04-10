@@ -78,12 +78,12 @@
 		29DB4EAA170E4D3B0098C6E0 /* CPWRPrefsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29DB4EA8170E4D3B0098C6E0 /* CPWRPrefsViewController.m */; };
 		29EE8E8B170E4C6F007BB885 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 29EE8E89170E4C6F007BB885 /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		B188D3211714BF0E00AE9E91 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B188D3201714BF0E00AE9E91 /* SystemConfiguration.framework */; };
-		B188D3231714C07500AE9E91 /* libCompuwareUEM.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B188D3221714C07500AE9E91 /* libCompuwareUEM.a */; settings = {ATTRIBUTES = (Required, ); }; };
 		B188D3271714C0B000AE9E91 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B188D3261714C0B000AE9E91 /* CoreLocation.framework */; };
 		B188D3291714C0C300AE9E91 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B188D3281714C0C300AE9E91 /* CoreTelephony.framework */; };
 		B188D32B1714C0D300AE9E91 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B188D32A1714C0D300AE9E91 /* Security.framework */; };
 		B188D32C1714C0E100AE9E91 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 293F6831170EFAF800C81652 /* libz.dylib */; };
 		B1F435F51715FE2600B7A8B2 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1F435F31715FE2600B7A8B2 /* MainStoryboard_iPhone.storyboard */; };
+		B1F435F917160E1600B7A8B2 /* libCompuwareUEM.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1F435F817160E1600B7A8B2 /* libCompuwareUEM.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -196,13 +196,14 @@
 		29EE8E89170E4C6F007BB885 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		29EE8E8A170E4C6F007BB885 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		B188D3201714BF0E00AE9E91 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		B188D3221714C07500AE9E91 /* libCompuwareUEM.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCompuwareUEM.a; path = "../../../../../Downloads/dynatrace-mobile-adk-5.0.0.3772(1)/iOS/adk/libCompuwareUEM.a"; sourceTree = "<group>"; };
 		B188D3241714C08C00AE9E91 /* CompuwareUEM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompuwareUEM.h; sourceTree = "<group>"; };
 		B188D3251714C08C00AE9E91 /* CPWRLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPWRLog.h; sourceTree = "<group>"; };
 		B188D3261714C0B000AE9E91 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		B188D3281714C0C300AE9E91 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		B188D32A1714C0D300AE9E91 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		B1F435F41715FE2600B7A8B2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
+		B1F435F617160DD200B7A8B2 /* libCompuwareUEM.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCompuwareUEM.a; sourceTree = "<group>"; };
+		B1F435F817160E1600B7A8B2 /* libCompuwareUEM.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCompuwareUEM.a; path = ../libCompuwareUEM.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -210,11 +211,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1F435F917160E1600B7A8B2 /* libCompuwareUEM.a in Frameworks */,
 				B188D32C1714C0E100AE9E91 /* libz.dylib in Frameworks */,
 				B188D32B1714C0D300AE9E91 /* Security.framework in Frameworks */,
 				B188D3291714C0C300AE9E91 /* CoreTelephony.framework in Frameworks */,
 				B188D3271714C0B000AE9E91 /* CoreLocation.framework in Frameworks */,
-				B188D3231714C07500AE9E91 /* libCompuwareUEM.a in Frameworks */,
 				B188D3211714BF0E00AE9E91 /* SystemConfiguration.framework in Frameworks */,
 				293F68A71712F05700C81652 /* libsqlite3.dylib in Frameworks */,
 				293F6842170F0DBE00C81652 /* AVFoundation.framework in Frameworks */,
@@ -235,10 +236,10 @@
 		291E6FA2170E49730055E770 = {
 			isa = PBXGroup;
 			children = (
+				B1F435F817160E1600B7A8B2 /* libCompuwareUEM.a */,
 				B188D32A1714C0D300AE9E91 /* Security.framework */,
 				B188D3281714C0C300AE9E91 /* CoreTelephony.framework */,
 				B188D3261714C0B000AE9E91 /* CoreLocation.framework */,
-				B188D3221714C07500AE9E91 /* libCompuwareUEM.a */,
 				B188D3201714BF0E00AE9E91 /* SystemConfiguration.framework */,
 				291E6FB4170E49730055E770 /* SPRINT */,
 				291E6FAD170E49730055E770 /* Frameworks */,
@@ -564,6 +565,7 @@
 		B13CF3BC1714A3D300286B8A /* CompuwareUEM */ = {
 			isa = PBXGroup;
 			children = (
+				B1F435F617160DD200B7A8B2 /* libCompuwareUEM.a */,
 				B188D3241714C08C00AE9E91 /* CompuwareUEM.h */,
 				B188D3251714C08C00AE9E91 /* CPWRLog.h */,
 			);
@@ -803,6 +805,7 @@
 					"$(Inherited)",
 					"\"$(SRCROOT)/../../../../../Downloads/dynatrace-mobile-adk-5.0.0.3772/iOS/adk\"",
 					"\"$(SRCROOT)/../../../../../Downloads/dynatrace-mobile-adk-5.0.0.3772(1)/iOS/adk\"",
+					"\"$(SRCROOT)/..\"",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
@@ -832,6 +835,7 @@
 					"$(Inherited)",
 					"\"$(SRCROOT)/../../../../../Downloads/dynatrace-mobile-adk-5.0.0.3772/iOS/adk\"",
 					"\"$(SRCROOT)/../../../../../Downloads/dynatrace-mobile-adk-5.0.0.3772(1)/iOS/adk\"",
+					"\"$(SRCROOT)/..\"",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (

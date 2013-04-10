@@ -172,6 +172,8 @@
     if (!documents) {
         documents  = [[NSMutableArray alloc] init];
     }
+    [documents removeAllObjects];
+    [self.tableView reloadData];
     
     // Prepare for the post
     if([self prepareForPost])
