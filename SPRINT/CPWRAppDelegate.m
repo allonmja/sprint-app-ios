@@ -8,6 +8,7 @@
 
 #import "CPWRAppDelegate.h"
 #import "CompuwareUEM.h"
+#import "CPWRPrefsViewController.h"
 
 @implementation CPWRAppDelegate
 
@@ -76,5 +77,8 @@
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"prefs:root=WIFI"]];
     }
 }
+
+
+
 
 @end

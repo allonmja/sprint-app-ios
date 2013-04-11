@@ -41,7 +41,12 @@
     [super viewDidLoad];
     
     
-    // [self refreshTables];
+    activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    activityIndicator.frame = CGRectMake(0.0, 0.0, 40.0, 40.0);
+    activityIndicator.center = self.view.center;
+    [self.view addSubview: activityIndicator];
+    
+    //[self refreshTables];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -53,89 +58,15 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [self refreshTables];
-    [self retrieveRecentPrinters];
-    [self addToRecentPrinters];
+    //[self retrieveRecentPrinters];
+    //[self addToRecentPrinters];
+    
+    [self dataPersistence];
+    [self retrieveDocuments];
 }
 
 
-- (void) retrieveRecentPrinters
-{
-    
-    if(!self.recentPrinters)
-    {
-        self.recentPrinters = [[NSMutableArray alloc] init];
-    }
-    [self.recentPrinters removeAllObjects];
-    
-    NSString *filePath = [self recentPrinterFilePath];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
-        NSMutableArray *array = [[NSMutableArray alloc] initWithContentsOfFile:filePath];
-        
-        NSString *name;
-        NSString *location;
-        NSString *printType = @"bw";
-        NSDictionary *printerRecord;
-        
-        for(NSDictionary *printer in array)
-        {
-            name = printer[@"name"];
-            location = printer[@"location"];
-            name = ([name length] > 0) ? name : @"Unknown";
-            location = ([location length] > 0 ) ? location  : @"Unknown";
-            
-            
-            printerRecord = [[NSDictionary alloc] initWithObjectsAndKeys: name, @"name",  location, @"location",
-                             printType, @"type", nil];
-            [self.recentPrinters addObject:printerRecord];
-            
-        }
-    }
-    
-    
-}
-- (void) addToRecentPrinters
-{
-    
-    int i =0;
-    for(NSDictionary *printer in self.recentPrinters)
-    {
-        if ([self.printerName isEqualToString:printer[@"name"]]){
-            return;
-        }
-        i++;
-        if (i>=5){
-            [self.recentPrinters removeLastObject];
-            [self saveRecentPrinters];
-            return;
-        }
-    }
-    NSString *location;
-    NSString *printType=@"bw";
-    NSDictionary *printerRecord = [[NSDictionary alloc] initWithObjectsAndKeys: self.printerName, @"name",  location, @"location", printType, @"type", nil];
-    [self.recentPrinters insertObject:printerRecord atIndex:0];
-    [self saveRecentPrinters];
-    
-    
-}
 
-
-- (void)saveRecentPrinters
-{
-    
-    NSMutableArray *array = [[NSMutableArray alloc] init];
-    NSLog(@"Datapath = %@", [self dataFilePath]);
-    [array addObjectsFromArray:self.recentPrinters];
-    [array writeToFile:[self recentPrinterFilePath] atomically:YES];
-    
-}
-
-- (NSString *)recentPrinterFilePath
-{
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(
-                                                         NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    return [documentsDirectory stringByAppendingPathComponent:kRecents];
-}
 
 - (void)refreshTables
 {
@@ -147,9 +78,6 @@
 		_refreshHeaderView = view;
 		
 	}
-    
-    [self dataPersistence];
-    [self retrieveDocuments];
 	
 	//  update the last update date
 	[_refreshHeaderView refreshLastUpdatedDate];
@@ -169,6 +97,13 @@
 
 - (void)retrieveDocuments
 {
+    
+    // start the activity indicator in the status bar
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    
+    // This starts the actiivity indicator on the view, in this case the table view containing Printer list
+    [activityIndicator startAnimating];
+    
     if (!documents) {
         documents  = [[NSMutableArray alloc] init];
     }
@@ -181,6 +116,12 @@
         // Get filtered documents
         [self setFilteredDocuments:[NSMutableArray arrayWithCapacity:documents.count]];
     }
+    
+    // stop the activity indicator in the status bar
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    
+    // stop the actiivity indicator on the view, in this case the table view containing Printer list
+    [activityIndicator stopAnimating];
     
 }
 
@@ -303,26 +244,29 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"printJob"]) {
+    //if ([[segue identifier] isEqualToString:@"printJob"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         [[segue destinationViewController] setJobID:documents[indexPath.row][@"job_id"]];
-        [[segue destinationViewController] setPrinterName:self.printerName];
+        [[segue destinationViewController] setJobName:documents[indexPath.row][@"name"]];
+        if (self.printerName != nil) {
+            [[segue destinationViewController] setPrinterName:self.printerName];
+            
+        }
         NSLog(@"printer name %@", self.printerName);
-        
-    }
+    //}
 }
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    NSLog(@"printerName: %@", self.printerName);
+    if (self.printerName == nil){
+        [self performSegueWithIdentifier:@"jobToPrinter" sender:self];
+    }
+    else{
+        [self performSegueWithIdentifier:@"printJob" sender:self];
+    }
 }
 
 - (NSString *)dataFilePath {
@@ -362,6 +306,10 @@
     // Setup request
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init] ;
     [request setURL:[NSURL URLWithString: DOCUMENT_LIST_URL]];
+    [request setTimeoutInterval:.5];
+    
+    
+    //NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:DOCUMENT_LIST_URL] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:1.0];
     
     [request setHTTPMethod:@"POST"];
     
@@ -386,19 +334,24 @@
                                                  returningResponse:&urlResponse
                                                              error:&error];
     
+    NSLog(@"responseData: %@", responseData);
+
+    if (responseData == nil){
+        return false;
+    }
     NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&error];
     
     NSLog(@"Response code: %d", [urlResponse statusCode]);
     
     if ([urlResponse statusCode] >=200 && [urlResponse statusCode] <300)
     {
-        //NSLog(@"jsonDict %@", jsonDict);
+        // NSLog(@"jsonDict %@", jsonDict);
         [self populateTable:jsonDict];
-        return YES;
+        return true;
     } else {
         NSLog(@"Error");
     }
-    return  NO;
+    return  false;
 }
 
 - (BOOL) cancelJobPost:(NSString*)job_id
@@ -533,7 +486,11 @@
 - (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
 	
 	[self reloadTableViewDataSource];
-	[self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:3.0];
+    
+    [self dataPersistence];
+    [self retrieveDocuments];
+    
+	[self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:0];
 	
 }
 

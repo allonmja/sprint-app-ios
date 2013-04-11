@@ -18,6 +18,9 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *resultImage;
 @property (weak, nonatomic) IBOutlet UILabel *resultText;
+@property NSString *jobID;
+@property NSString *jobName;
+@property NSString *printerName;
 
 - (IBAction)scanButtonTapped:(id)sender;
 

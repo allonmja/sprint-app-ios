@@ -12,11 +12,16 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *printStatusLabel;
 @property (nonatomic) NSString *jobID;
+@property (nonatomic) NSString *jobName;
 @property (nonatomic) NSString *printerName;
 
 - (IBAction)printBtnClicked:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIButton *printButton;
+@property NSMutableArray *recentPrinters;
+
+@property (weak, nonatomic) IBOutlet UILabel *documentLabel;
+@property (weak, nonatomic) IBOutlet UILabel *locationLabel;
 
 
 @end

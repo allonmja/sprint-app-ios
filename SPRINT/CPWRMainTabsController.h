@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CPWRPrefsViewController.h"
 
 @interface CPWRMainTabsController : UITabBarController
 
 - (IBAction)scanBtnClicked:(id)sender;
 
+- (NSString *)dataFilePath;
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *preferencesButton;
 
 @end

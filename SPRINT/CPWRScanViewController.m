@@ -11,10 +11,9 @@
 #import "CPWRDocumentsViewController.h"
 #import "CompuwareUEM.h"
 
-
 @interface CPWRScanViewController ()
 {
-    NSString *printerName;
+    NSString *printName;
 }
 
 @end
@@ -27,6 +26,7 @@
     
     CPWRButtonStyles *buttonDesigner = [[CPWRButtonStyles alloc] init];
     [buttonDesigner designButton: self.startScanButton];
+    
     
     /*  Compuware UEM monitoring start scan action.  */
     [CompuwareUEM enterAction:@"Start Scan"];
@@ -78,8 +78,8 @@
         break;
     
     
-    printerName = symbol.data;
-    NSLog(@"Printer name = %@", printerName);
+    printName = symbol.data;
+    NSLog(@"Printer name = %@", printName);
     
     
     // EXAMPLE: do something useful with the barcode data
@@ -94,7 +94,13 @@
     [reader dismissModalViewControllerAnimated: YES];
     
     CPWRDocumentsViewController *myNewVC = [[CPWRDocumentsViewController alloc] init];
-    [self performSegueWithIdentifier: @"documentSegue" sender: self];
+    
+    if ([[self jobID] length] >0){
+        [self performSegueWithIdentifier: @"printJob" sender: self];
+
+    }else{
+        [self performSegueWithIdentifier: @"documentSegue" sender: self];
+    }
     
     // do any setup you need for myNewVC
     [self presentModalViewController:myNewVC animated:YES];
@@ -102,14 +108,16 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    [[segue destinationViewController] setPrinterName:printerName];
+    [[segue destinationViewController] setPrinterName:printName];
+    if ([[self jobID] length] >0){
+        [[segue destinationViewController] setJobID:[self jobID]];
+        [[segue destinationViewController] setJobName:[self jobName]];
+    }
     
     /*  Compuware UEM leaving start scan action  */
     [CompuwareUEM leaveAction:@"Start Scan"];
-
     
 }
-
 
 
 - (void) imagePickerControllerDidCancel:(UIImagePickerController *)picker
@@ -124,5 +132,6 @@
 {
     return(YES);
 }
+
 
 @end

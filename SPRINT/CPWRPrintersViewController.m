@@ -41,6 +41,10 @@
     [super viewDidLoad];
     //[self refreshTables];
 
+    activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    activityIndicator.frame = CGRectMake(0.0, 0.0, 40.0, 40.0);
+    activityIndicator.center = self.view.center;
+    [self.view addSubview: activityIndicator];
     
     
     // Uncomment the following line to preserve selection between presentations.
@@ -55,16 +59,19 @@
     [self refreshTables];
 
     [super viewWillAppear:animated];
-    
-    
 }
 
 - (void)retrievePrinters
 {
     
     // Compuware UEM event.  Monitoring load time for printers
+    [CompuwareUEM enterAction:@"ios_loadPrinters"];
     
-    [CompuwareUEM enterAction:@"Load Printers"];
+    // start the activity indicator in the status bar
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    
+    // This starts the actiivity indicator on the view, in this case the table view containing Printer list
+    [activityIndicator startAnimating];    
     
     if (!printers) {
         printers = [[NSMutableArray alloc] init];
@@ -154,6 +161,7 @@
     int i = 0;
     for(NSDictionary *printer in jsonObject)
     {
+        
         name = printer[@"printer_name"];
         location = printer[@"port_name"];
         
@@ -161,11 +169,17 @@
         name = ([name length] > 0) ? name : @"Unknown";
         location = ([location length] > 0 ) ? location  : @"Unknown";
         
+        if([name isEqualToString:@"default"]){
+            ; // spin
+        }else{
+            
+            printerRecord = [[NSDictionary alloc] initWithObjectsAndKeys: name, @"name",  location, @"location",
+                             printType, @"type", nil];
+            [self insertNewObject:printerRecord andCounter:i];
+            i++;
+        }
         
-        printerRecord = [[NSDictionary alloc] initWithObjectsAndKeys: name, @"name",  location, @"location",
-                         printType, @"type", nil];
-        [self insertNewObject:printerRecord andCounter:i];
-        i++;
+        
     }
 
     if (recentPrinters == nil){
@@ -188,7 +202,14 @@
     // Compuware UEM event.  Leaving load printers
     
     [CompuwareUEM leaveAction:@"Load Printers"];
-
+    
+    
+    
+    // stop the activity indicator in the status bar
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    
+    // stop the actiivity indicator on the view, in this case the table view containing Printer list
+    [activityIndicator stopAnimating];
     
 }
 
@@ -282,21 +303,26 @@
     
     if(tableView == [[self searchDisplayController] searchResultsTableView])
     {
-        if (indexPath.section==1 && self.filteredPrinters.count > 0){
+        if (self.filteredPrinters.count > 0){
             [self setPrinterImage:self.filteredPrinters[indexPath.row][@"type"] withImageView:cell.printerImageView];
             //cell.printerLocationLabel.text   = self.filteredPrinters[indexPath.row][@"location"];
+            cell.printerLocationLabel.text   = @"";
             cell.printerNameLabel.text      = self.filteredPrinters[indexPath.row][@"name"];
-            cell.printerNameLabel.lineBreakMode = UILineBreakModeWordWrap;
-            cell.printerNameLabel.numberOfLines = 2;
-            [self.tableView setRowHeight:90];
+            cell.printerNameLabel.lineBreakMode = UILineBreakModeMiddleTruncation;
+            cell.printerNameLabel.numberOfLines = 3;
         }
+        
+        [self.tableView setRowHeight:100];
+        
+        NSLog(@"Filtering");
     } else {
+        NSLog(@"No filter");
         switch (indexPath.section) {
             case 1:
                 [self setPrinterImage:printers[indexPath.row][@"type"] withImageView:cell.printerImageView];
                 cell.printerLocationLabel.text   = printers[indexPath.row][@"location"];
                 cell.printerNameLabel.text      = printers[indexPath.row][@"name"];
-                cell.printerNameLabel.lineBreakMode = UILineBreakModeWordWrap;
+                cell.printerNameLabel.lineBreakMode = UILineBreakModeMiddleTruncation;
                 cell.printerNameLabel.numberOfLines = 2;
                 break;
                 
@@ -304,7 +330,7 @@
                 [self setPrinterImage:printers[indexPath.row][@"type"] withImageView:cell.printerImageView];
                 cell.printerLocationLabel.text   = recentPrinters[indexPath.row][@"location"];
                 cell.printerNameLabel.text      = recentPrinters[indexPath.row][@"name"];
-                cell.printerNameLabel.lineBreakMode = UILineBreakModeWordWrap;
+                cell.printerNameLabel.lineBreakMode = UILineBreakModeMiddleTruncation;
                 cell.printerNameLabel.numberOfLines = 2;
                 break;
             default:
@@ -315,6 +341,7 @@
     [self.tableView setRowHeight:90];
     return cell;
 }
+
 
 - (void)setPrinterImage:(NSString *)type withImageView:(UIImageView *)image
 {
@@ -382,13 +409,13 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    NSLog(@"printerName: %@", self.printerName);
+    if (self.jobID == nil){
+        [self performSegueWithIdentifier:@"printerToJob" sender:self];
+    }
+    else{
+        [self performSegueWithIdentifier:@"printJob" sender:self];
+    }
 }
 
 - (void)filterContentForSearchText:(NSString*)searchText
@@ -401,6 +428,7 @@
         
         if (result == NSOrderedSame) [self.filteredPrinters addObject:p];
 	}
+
 }
 
 
@@ -413,7 +441,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"selectDocs"]) {
+    //if ([[segue identifier] isEqualToString:@"selectDocs"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         
         NSLog(@"Section index = %i", indexPath.section);
@@ -434,8 +462,14 @@
                 //[[segue destinationViewController] setPrinterName:self.filteredPrinters[indexPath.row][@"name"]];
                 break;
         }
+    
+        if(self.jobID != nil)
+        {
+            [[segue destinationViewController] setJobID:self.jobID];
+            [[segue destinationViewController] setJobName:self.jobName];
+        }
         
-    }
+    //}
 
     
 }

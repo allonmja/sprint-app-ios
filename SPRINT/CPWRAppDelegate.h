@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Reachability.h"
-#import "CPWRPrefsViewController.h"
+
 
 @interface CPWRAppDelegate : UIResponder <UIApplicationDelegate, UIAlertViewDelegate>
 

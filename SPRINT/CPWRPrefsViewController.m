@@ -35,6 +35,8 @@
     
     [self configureView];
     
+    self.navigationItem.hidesBackButton = YES;
+    
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -110,13 +112,20 @@
 
 - (void)saveUserPreferences
 {
-    [userPrefs setObject:self.networkIDTextField.text forKey:@"userNetworkID"];
     
-    NSMutableArray *array = [[NSMutableArray alloc] init];
-    [array addObject:_networkIDTextField.text];
-    [array writeToFile:[self dataFilePath] atomically:YES];
+    if(_networkIDTextField.text.length > 0)
+    {
+        [userPrefs setObject:self.networkIDTextField.text forKey:@"userNetworkID"];
+        
+        NSMutableArray *array = [[NSMutableArray alloc] init];
+        [array addObject:_networkIDTextField.text];
+        
+        [array writeToFile:[self dataFilePath] atomically:YES];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
     
-    [self.navigationController popViewControllerAnimated:YES];
+    self.navigationItem.hidesBackButton = NO;
+    
 }
 
 - (void) hideKeyboard

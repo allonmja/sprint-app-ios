@@ -11,6 +11,8 @@
 
 #define RELEASE_PRINT_JOB_URL @"http://10.24.16.122/release_print_job.php"
 #define MOVE_JOB_TO_PRINTER_URL @"http://10.24.16.122/move_print_job.php"
+#define kRecents @"recentPrinters.plist"
+
 
 @interface CPWRPrintViewController ()
 
@@ -45,6 +47,99 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void) viewWillAppear:(BOOL)animated
+{
+    [[self locationLabel] setText:[NSString stringWithFormat: @"Printer: \n%@", self.printerName]];
+    [[self documentLabel] setText:[NSString stringWithFormat: @"Document: \n%@", self.jobName]];
+    [self retrieveRecentPrinters];
+    [self addToRecentPrinters];
+}
+
+
+- (void) retrieveRecentPrinters
+{
+    
+    if(!self.recentPrinters)
+    {
+        self.recentPrinters = [[NSMutableArray alloc] init];
+    }
+    [self.recentPrinters removeAllObjects];
+    
+    NSString *filePath = [self recentPrinterFilePath];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
+        NSMutableArray *array = [[NSMutableArray alloc] initWithContentsOfFile:filePath];
+        
+        NSString *name;
+        NSString *location;
+        NSString *printType = @"bw";
+        NSDictionary *printerRecord;
+        
+        for(NSDictionary *printer in array)
+        {
+            name = printer[@"name"];
+            location = printer[@"location"];
+            name = ([name length] > 0) ? name : @"Unknown";
+            location = ([location length] > 0 ) ? location  : @"Unknown";
+            
+            
+            printerRecord = [[NSDictionary alloc] initWithObjectsAndKeys: name, @"name",  location, @"location",
+                             printType, @"type", nil];
+            [self.recentPrinters addObject:printerRecord];
+            
+        }
+    }
+    
+    
+}
+- (void) addToRecentPrinters
+{
+    
+    
+    // Check if we have a printer name.  This will vary depending on what we've segued from
+    if (self.printerName.length == 0)
+    {
+        return;
+    }
+    
+    int i =0;
+    for(NSDictionary *printer in self.recentPrinters)
+    {
+        if ([self.printerName isEqualToString:printer[@"name"]]){
+            return;
+        }
+        i++;
+        if (i>=5){
+            [self.recentPrinters removeLastObject];
+            [self saveRecentPrinters];
+            return;
+        }
+    }
+    NSString *location;
+    NSString *printType=@"bw";
+    NSDictionary *printerRecord = [[NSDictionary alloc] initWithObjectsAndKeys: self.printerName, @"name",  location, @"location", printType, @"type", nil];
+    [self.recentPrinters insertObject:printerRecord atIndex:0];
+    [self saveRecentPrinters];
+    
+    
+}
+
+
+- (void)saveRecentPrinters
+{
+    
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    [array addObjectsFromArray:self.recentPrinters];
+    [array writeToFile:[self recentPrinterFilePath] atomically:YES];
+    
+}
+
+- (NSString *)recentPrinterFilePath
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(
+                                                         NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    return [documentsDirectory stringByAppendingPathComponent:kRecents];
+}
 
 - (void)moveJobToPrinter
 {
@@ -172,6 +267,8 @@
 - (void)viewDidUnload {
     [self setPrintStatusLabel:nil];
     [self setPrintButton:nil];
+    [self setDocumentLabel:nil];
+    [self setLocationLabel:nil];
     [super viewDidUnload];
 }
 @end
