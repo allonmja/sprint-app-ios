@@ -282,14 +282,14 @@
     
     if(tableView == [[self searchDisplayController] searchResultsTableView])
     {
-        //if (indexPath.section==1){
+        if (indexPath.section==1 && self.filteredPrinters.count > 0){
             [self setPrinterImage:self.filteredPrinters[indexPath.row][@"type"] withImageView:cell.printerImageView];
             //cell.printerLocationLabel.text   = self.filteredPrinters[indexPath.row][@"location"];
             cell.printerNameLabel.text      = self.filteredPrinters[indexPath.row][@"name"];
             cell.printerNameLabel.lineBreakMode = UILineBreakModeWordWrap;
             cell.printerNameLabel.numberOfLines = 2;
-            [self.tableView setRowHeight:200];
-        //}
+            [self.tableView setRowHeight:90];
+        }
     } else {
         switch (indexPath.section) {
             case 1:
@@ -312,6 +312,7 @@
         }
 
     }
+    [self.tableView setRowHeight:90];
     return cell;
 }
 
@@ -414,10 +415,15 @@
 {
     if ([[segue identifier] isEqualToString:@"selectDocs"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        
+        NSLog(@"Section index = %i", indexPath.section);
+        
         switch (indexPath.section) {
             case 0:
-                [[segue destinationViewController] setPrinterName:recentPrinters[indexPath.row][@"name"]];
-
+                if(recentPrinters.count > 0)
+                    [[segue destinationViewController] setPrinterName:recentPrinters[indexPath.row][@"name"]];
+                else
+                   [[segue destinationViewController] setPrinterName:printers[indexPath.row][@"name"]]; 
                 break;
             case 1:
                 [[segue destinationViewController] setPrinterName:printers[indexPath.row][@"name"]];
@@ -425,7 +431,7 @@
                 break;
                 
             default:
-                [[segue destinationViewController] setPrinterName:self.filteredPrinters[indexPath.row][@"name"]];
+                //[[segue destinationViewController] setPrinterName:self.filteredPrinters[indexPath.row][@"name"]];
                 break;
         }
         
