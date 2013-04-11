@@ -16,8 +16,8 @@
 		291E6FB9170E49730055E770 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 291E6FB7170E49730055E770 /* InfoPlist.strings */; };
 		291E6FBB170E49730055E770 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 291E6FBA170E49730055E770 /* main.m */; };
 		291E6FBF170E49730055E770 /* CPWRAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 291E6FBE170E49730055E770 /* CPWRAppDelegate.m */; };
-		291E6FC1170E49730055E770 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 291E6FC0170E49730055E770 /* Default.png */; };
-		291E6FC3170E49730055E770 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 291E6FC2170E49730055E770 /* Default@2x.png */; };
+		291E6FC1170E49730055E770 /* Default_old.png in Resources */ = {isa = PBXBuildFile; fileRef = 291E6FC0170E49730055E770 /* Default_old.png */; };
+		291E6FC3170E49730055E770 /* Default_old@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 291E6FC2170E49730055E770 /* Default_old@2x.png */; };
 		291E6FC5170E49730055E770 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 291E6FC4170E49730055E770 /* Default-568h@2x.png */; };
 		291E6FCB170E49730055E770 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 291E6FC9170E49730055E770 /* MainStoryboard_iPad.storyboard */; };
 		291E6FD0170E49730055E770 /* first.png in Resources */ = {isa = PBXBuildFile; fileRef = 291E6FCF170E49730055E770 /* first.png */; };
@@ -75,6 +75,8 @@
 		293F68A71712F05700C81652 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 293F68A51712F03800C81652 /* libsqlite3.dylib */; };
 		2947862D170E4C0B0065E8CF /* CPWRButtonStyles.m in Sources */ = {isa = PBXBuildFile; fileRef = 2947862C170E4C0B0065E8CF /* CPWRButtonStyles.m */; };
 		296CE0D4170E4D70002E2B03 /* CPWRScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 296CE0D2170E4D70002E2B03 /* CPWRScanViewController.m */; };
+		29A970A81716EFA400649F53 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 29A970A71716EFA400649F53 /* Default.png */; };
+		29A970AA1716EFA800649F53 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 29A970A91716EFA800649F53 /* Default@2x.png */; };
 		29DB4EAA170E4D3B0098C6E0 /* CPWRPrefsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29DB4EA8170E4D3B0098C6E0 /* CPWRPrefsViewController.m */; };
 		29EE8E8B170E4C6F007BB885 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 29EE8E89170E4C6F007BB885 /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		B188D3211714BF0E00AE9E91 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B188D3201714BF0E00AE9E91 /* SystemConfiguration.framework */; };
@@ -103,8 +105,8 @@
 		291E6FBC170E49730055E770 /* SPRINT-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SPRINT-Prefix.pch"; sourceTree = "<group>"; };
 		291E6FBD170E49730055E770 /* CPWRAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPWRAppDelegate.h; sourceTree = "<group>"; };
 		291E6FBE170E49730055E770 /* CPWRAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CPWRAppDelegate.m; sourceTree = "<group>"; };
-		291E6FC0170E49730055E770 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		291E6FC2170E49730055E770 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		291E6FC0170E49730055E770 /* Default_old.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default_old.png; sourceTree = "<group>"; };
+		291E6FC2170E49730055E770 /* Default_old@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default_old@2x.png"; sourceTree = "<group>"; };
 		291E6FC4170E49730055E770 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		291E6FCA170E49730055E770 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
 		291E6FCF170E49730055E770 /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first.png; sourceTree = "<group>"; };
@@ -191,6 +193,10 @@
 		2947862C170E4C0B0065E8CF /* CPWRButtonStyles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPWRButtonStyles.m; sourceTree = "<group>"; };
 		296CE0D2170E4D70002E2B03 /* CPWRScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPWRScanViewController.m; sourceTree = "<group>"; };
 		296CE0D3170E4D70002E2B03 /* CPWRScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPWRScanViewController.h; sourceTree = "<group>"; };
+		29A970A31716EF7100649F53 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		29A970A41716EF7100649F53 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		29A970A71716EFA400649F53 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../Default.png; sourceTree = "<group>"; };
+		29A970A91716EFA800649F53 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../Default@2x.png"; sourceTree = "<group>"; };
 		29DB4EA8170E4D3B0098C6E0 /* CPWRPrefsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPWRPrefsViewController.m; sourceTree = "<group>"; };
 		29DB4EA9170E4D3B0098C6E0 /* CPWRPrefsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPWRPrefsViewController.h; sourceTree = "<group>"; };
 		29EE8E89170E4C6F007BB885 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
@@ -294,8 +300,8 @@
 				291E6FB7170E49730055E770 /* InfoPlist.strings */,
 				291E6FBA170E49730055E770 /* main.m */,
 				291E6FBC170E49730055E770 /* SPRINT-Prefix.pch */,
-				291E6FC0170E49730055E770 /* Default.png */,
-				291E6FC2170E49730055E770 /* Default@2x.png */,
+				291E6FC0170E49730055E770 /* Default_old.png */,
+				291E6FC2170E49730055E770 /* Default_old@2x.png */,
 				291E6FC4170E49730055E770 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
@@ -304,6 +310,10 @@
 		291E6FDF170E498E0055E770 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				29A970A91716EFA800649F53 /* Default@2x.png */,
+				29A970A71716EFA400649F53 /* Default.png */,
+				29A970A31716EF7100649F53 /* Default.png */,
+				29A970A41716EF7100649F53 /* Default@2x.png */,
 				293F6889170F4CEA00C81652 /* qrbypdp.png */,
 				291E6FCF170E49730055E770 /* first.png */,
 				291E6FD1170E49730055E770 /* first@2x.png */,
@@ -625,8 +635,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				291E6FB9170E49730055E770 /* InfoPlist.strings in Resources */,
-				291E6FC1170E49730055E770 /* Default.png in Resources */,
-				291E6FC3170E49730055E770 /* Default@2x.png in Resources */,
+				291E6FC1170E49730055E770 /* Default_old.png in Resources */,
+				291E6FC3170E49730055E770 /* Default_old@2x.png in Resources */,
 				291E6FC5170E49730055E770 /* Default-568h@2x.png in Resources */,
 				291E6FCB170E49730055E770 /* MainStoryboard_iPad.storyboard in Resources */,
 				291E6FD0170E49730055E770 /* first.png in Resources */,
@@ -670,6 +680,8 @@
 				293F68A0170F881800C81652 /* whiteArrow.png in Resources */,
 				293F68A1170F881800C81652 /* whiteArrow@2x.png in Resources */,
 				B1F435F51715FE2600B7A8B2 /* MainStoryboard_iPhone.storyboard in Resources */,
+				29A970A81716EFA400649F53 /* Default.png in Resources */,
+				29A970AA1716EFA800649F53 /* Default@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
