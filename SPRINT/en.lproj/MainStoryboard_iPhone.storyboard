@@ -4,7 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
     <scenes>
-        <!--Prefs View Controller - Preferences-->
+        <!--Prefs View Controller - Login-->
         <scene sceneID="RPn-v5-aiD">
             <objects>
                 <tableViewController id="tNN-mX-XMm" customClass="CPWRPrefsViewController" sceneMemberID="viewController">
@@ -80,7 +80,7 @@
                             <outlet property="delegate" destination="tNN-mX-XMm" id="aD9-7m-9RY"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Preferences" id="7L5-KL-bXm"/>
+                    <navigationItem key="navigationItem" title="Login" id="7L5-KL-bXm"/>
                     <connections>
                         <outlet property="networkIDTextField" destination="VVN-Gg-tWH" id="7fJ-aZ-7ow"/>
                         <outlet property="saveButton" destination="Bk4-u8-s4W" id="g82-wL-0Ze"/>
@@ -88,7 +88,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kCe-0v-owy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="792" y="-469"/>
+            <point key="canvasLocation" x="620" y="-575"/>
         </scene>
         <!--Printers View Controller - Printers-->
         <scene sceneID="bLL-Wt-kvr">
@@ -114,18 +114,16 @@
                                     <rect key="frame" x="10" y="1" width="280" height="73"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="colorprinter.png" id="Kqs-a8-pkX">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="Kqs-a8-pkX">
                                             <rect key="frame" x="11" y="10" width="47" height="53"/>
                                         </imageView>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wv0-Yv-grP">
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wv0-Yv-grP">
                                             <rect key="frame" x="65" y="5" width="202" height="47"/>
-                                            <string key="text">Ricoh afio mp
-test</string>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="8th Floor Woodward" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vno-6q-yKf">
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vno-6q-yKf">
                                             <rect key="frame" x="65" y="44" width="203" height="21"/>
                                             <fontDescription key="fontDescription" type="italicSystem" pointSize="12"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -172,7 +170,7 @@ test</string>
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="1747" y="-277"/>
+            <point key="canvasLocation" x="1487" y="-689"/>
         </scene>
         <!--Scan View Controller-->
         <scene sceneID="pKB-ws-QBu">
@@ -189,18 +187,18 @@ test</string>
                                 <textInputTraits key="textInputTraits"/>
                             </textView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="qrbypdp.png" id="9Kl-q3-Rv0">
-                                <rect key="frame" x="42" y="32" width="236" height="233"/>
+                                <rect key="frame" x="42" y="27" width="236" height="233"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="No barcode scanned" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LSi-NR-RGY">
-                                <rect key="frame" x="20" y="283" width="286" height="21"/>
+                                <rect key="frame" x="20" y="286" width="286" height="21"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="e2R-ah-9tj">
-                                <rect key="frame" x="20" y="343" width="280" height="44"/>
+                                <rect key="frame" x="20" y="346" width="280" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Scan">
@@ -228,7 +226,7 @@ test</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1vT-Bn-Ob1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2353" y="-260"/>
+            <point key="canvasLocation" x="2177" y="-689"/>
         </scene>
         <!--Documents View Controller - Documents-->
         <scene sceneID="nmR-e6-OQk">
@@ -304,18 +302,18 @@ test</string>
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="1267" y="159"/>
+            <point key="canvasLocation" x="1603" y="539"/>
         </scene>
         <!--Print View Controller - Print-->
         <scene sceneID="AVm-JE-8iL">
             <objects>
                 <viewController id="LXb-Ua-Ruf" customClass="CPWRPrintViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="MeQ-bu-9mn">
-                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="colorprinter.png" id="4PP-xP-3ht">
-                                <rect key="frame" x="104" y="91" width="113" height="119"/>
+                                <rect key="frame" x="104" y="117" width="113" height="119"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ZU0-ry-qMe">
                                 <rect key="frame" x="20" y="360" width="280" height="44"/>
@@ -370,7 +368,7 @@ w05p02compuware.com</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ElD-Of-ofc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2430" y="554"/>
+            <point key="canvasLocation" x="2574" y="130"/>
         </scene>
         <!--Scan View Controller - First-->
         <scene sceneID="11">
@@ -427,7 +425,7 @@ w05p02compuware.com</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="10" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="809" y="646"/>
+            <point key="canvasLocation" x="1049" y="-22"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="lI1-VW-oHv">
@@ -435,6 +433,7 @@ w05p02compuware.com</string>
                 <navigationController definesPresentationContext="YES" id="wgk-g5-Ps2" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="mR6-fD-T8l">
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="0.98297384509999997" green="0.36439774979725631" blue="0.055330607865027193" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="4" kind="relationship" relationship="rootViewController" id="SbH-Fa-RIX"/>
@@ -554,9 +553,9 @@ w05p02compuware.com</string>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="FyE-lg-V3E"/>
         <segue reference="26"/>
         <segue reference="Dxb-5k-Mf7"/>
-        <segue reference="bH1-oK-vmb"/>
+        <segue reference="sxB-3R-NMm"/>
+        <segue reference="Pwj-OB-zKc"/>
     </inferredMetricsTieBreakers>
 </document>

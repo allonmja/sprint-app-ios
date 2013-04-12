@@ -32,6 +32,7 @@
 	// Do any additional setup after loading the view.
     
     self.navigationItem.rightBarButtonItem = nil;
+    self.navigationItem.leftBarButtonItem = nil;
     
     [self checkUserNetworkID];
 }

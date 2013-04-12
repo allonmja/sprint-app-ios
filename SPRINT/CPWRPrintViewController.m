@@ -8,7 +8,9 @@
 
 #import "CPWRPrintViewController.h"
 #import "CPWRButtonStyles.h"
+#import "CompuwareUEM.h"
 
+#define kFilename @"userPrefs.plist"
 #define RELEASE_PRINT_JOB_URL @"http://10.24.16.122/release_print_job.php"
 #define MOVE_JOB_TO_PRINTER_URL @"http://10.24.16.122/move_print_job.php"
 #define kRecents @"recentPrinters.plist"
@@ -150,11 +152,15 @@
     
     NSLog(@"Printer name: %@", printer);
     
+    
     // Setup request
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init] ;
     [request setURL:[NSURL URLWithString: MOVE_JOB_TO_PRINTER_URL]];
     
     [request setHTTPMethod:@"POST"];
+    
+    // Compuware UEM event. Entering print job
+    [CompuwareUEM enterAction:@"Print Job"];
     
     NSString *jID = self.jobID;
     
@@ -189,9 +195,25 @@
             
             self.printButton.hidden = false;
             
+            NSString *username = @"";
+            
+            NSString *filePath = [self dataFilePath];
+            if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
+                NSArray *array = [[NSArray alloc] initWithContentsOfFile:filePath];
+                username = [array objectAtIndex:0];
+            }
+            
+            [CompuwareUEM reportEvent:[NSString stringWithFormat:@"Username - %@", username]];
+            [CompuwareUEM reportEvent: [NSString stringWithFormat: @"Printer - %@", self.printerName]];
+            [CompuwareUEM leaveAction:@"Print Job"];
+            
+            
             _printStatusLabel.textColor = [UIColor blueColor];
             _printStatusLabel.text = @"Ready to Print";
         } else {
+            
+            [CompuwareUEM reportEvent:@"Print Job - Failed"];
+            [CompuwareUEM leaveAction:@"Print Job"];
             
             NSLog(@"Failed to print Job!!! Please try again");
             _printStatusLabel.textColor = [UIColor redColor];
@@ -204,6 +226,13 @@
     
 }
 
+
+- (NSString *)dataFilePath {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(
+                                                         NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    return [documentsDirectory stringByAppendingPathComponent:kFilename];
+}
 
 - (void)prepareForPost
 {
@@ -243,8 +272,12 @@
         
         if ([status intValue] == 0){
             NSLog(@"Success!!!");
+            
             _printStatusLabel.textColor = [UIColor greenColor];
             _printStatusLabel.text = @"SUCCESS";
+            
+            
+            
             
         } else {
             NSLog(@"Failed to print Job!!! Please try again");

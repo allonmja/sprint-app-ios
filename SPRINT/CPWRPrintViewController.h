@@ -16,6 +16,7 @@
 @property (nonatomic) NSString *printerName;
 
 - (IBAction)printBtnClicked:(id)sender;
+- (NSString *)dataFilePath;
 
 @property (weak, nonatomic) IBOutlet UIButton *printButton;
 @property NSMutableArray *recentPrinters;

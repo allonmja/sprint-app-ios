@@ -252,7 +252,7 @@
             [[segue destinationViewController] setPrinterName:self.printerName];
             
         }
-        NSLog(@"printer name %@", self.printerName);
+       // NSLog(@"printer name %@", self.printerName);
     //}
 }
 
@@ -260,7 +260,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"printerName: %@", self.printerName);
+    // NSLog(@"printerName: %@", self.printerName);
     if (self.printerName == nil){
         [self performSegueWithIdentifier:@"jobToPrinter" sender:self];
     }
@@ -301,7 +301,7 @@
 {
     
     // Compuware UEM event.  Monitoring loading jobs.
-    [CompuwareUEM enterAction:@"Load Jobs"];
+    [CompuwareUEM enterAction:@"Job List Load"];
     
     // Setup request
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init] ;
@@ -316,7 +316,7 @@
     NSString *username = userID;
     
     NSString *post = [NSString stringWithFormat:@"user_name=%@", username];
-    NSLog(@"post value = %@", post);
+    // NSLog(@"post value = %@", post);
     
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     NSString *postLength = [NSString stringWithFormat:@"%d", [postData length]];
@@ -334,14 +334,17 @@
                                                  returningResponse:&urlResponse
                                                              error:&error];
     
-    NSLog(@"responseData: %@", responseData);
+    [CompuwareUEM leaveAction:@"Job List Load"];
+    
+    // NSLog(@"responseData: %@", responseData);
 
-    if (responseData == nil){
+    if (responseData == nil)
+    {
         return false;
     }
     NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&error];
     
-    NSLog(@"Response code: %d", [urlResponse statusCode]);
+    // NSLog(@"Response code: %d", [urlResponse statusCode]);
     
     if ([urlResponse statusCode] >=200 && [urlResponse statusCode] <300)
     {
@@ -349,7 +352,7 @@
         [self populateTable:jsonDict];
         return true;
     } else {
-        NSLog(@"Error");
+        NSLog(@"Error in retrieving document list");
     }
     return  false;
 }
@@ -358,7 +361,7 @@
 {
     
     // Compuware UEM event.  Monitoring loading jobs.
-    [CompuwareUEM enterAction:@"Load Jobs"];
+    //[CompuwareUEM enterAction:@"Load Jobs"];
     
     // Setup request
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init] ;
@@ -368,8 +371,8 @@
     
     
     NSString *post = [NSString stringWithFormat:@"job_id=%@", job_id];
-    //NSLog(@"job_id = %@", job_id);
-    NSLog(@"cancel value = %@", post);
+    // NSLog(@"job_id = %@", job_id);
+    // NSLog(@"cancel value = %@", post);
     
     NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     NSString *postLength = [NSString stringWithFormat:@"%d", [postData length]];
@@ -388,13 +391,13 @@
                                       error:&error];
     
     
-    NSLog(@"Response code: %d", [urlResponse statusCode]);
+    // NSLog(@"Response code: %d", [urlResponse statusCode]);
     
     if ([urlResponse statusCode] >=200 && [urlResponse statusCode] <300)
     {
         
     } else {
-        NSLog(@"Error");
+        NSLog(@"Error: Response code greater than 300");
     }
     return  NO;
     
@@ -425,7 +428,7 @@
         i++;
     }
     
-    NSLog(@"Count of document: %i", documents.count);
+    // NSLog(@"Count of document: %i", documents.count);
     
     if(documents.count == 0)
     {
@@ -436,8 +439,6 @@
                                                   otherButtonTitles:nil];
         [alertView show];
     }
-    
-    [CompuwareUEM leaveAction:@"Load Jobs"];
     
 }
 

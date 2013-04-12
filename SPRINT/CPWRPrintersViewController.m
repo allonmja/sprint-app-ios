@@ -65,7 +65,7 @@
 {
     
     // Compuware UEM event.  Monitoring load time for printers
-    [CompuwareUEM enterAction:@"ios_loadPrinters"];
+    [CompuwareUEM enterAction:@"Printer list load"];
     
     // start the activity indicator in the status bar
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
@@ -118,7 +118,8 @@
             
             
             name = ([name length] > 0) ? name : @"Unknown";
-            location = ([location length] > 0 ) ? location  : @"Unknown";
+            location = ([location length] > 0 ) ? location  : @"";
+            location = ([location isEqualToString:@"Unknown"]) ? @"" : location;
             
             
             printerRecord = [[NSDictionary alloc] initWithObjectsAndKeys: name, @"name",  location, @"location",
@@ -157,6 +158,10 @@
     NSString *location;
     NSString *printType = @"bw";
     
+    
+    // Compuware UEM event.  Leaving load printers
+    [CompuwareUEM leaveAction:@"Printer list load"];
+    
     /*  Loop through the JSON object to create printers  */
     int i = 0;
     for(NSDictionary *printer in jsonObject)
@@ -167,7 +172,8 @@
         
         
         name = ([name length] > 0) ? name : @"Unknown";
-        location = ([location length] > 0 ) ? location  : @"Unknown";
+        location = ([location length] > 0) ? location  : @"";
+        location = ([location isEqualToString:@"Unknown"]) ? @"" : location;
         
         if([name isEqualToString:@"default"]){
             ; // spin
@@ -199,9 +205,6 @@
         [alertView show];
     }
     
-    // Compuware UEM event.  Leaving load printers
-    
-    [CompuwareUEM leaveAction:@"Load Printers"];
     
     
     
@@ -303,20 +306,26 @@
     
     if(tableView == [[self searchDisplayController] searchResultsTableView])
     {
-        if (self.filteredPrinters.count > 0){
+        if (indexPath.section == 1 && self.filteredPrinters.count > 0){
             [self setPrinterImage:self.filteredPrinters[indexPath.row][@"type"] withImageView:cell.printerImageView];
             //cell.printerLocationLabel.text   = self.filteredPrinters[indexPath.row][@"location"];
             cell.printerLocationLabel.text   = @"";
             cell.printerNameLabel.text      = self.filteredPrinters[indexPath.row][@"name"];
             cell.printerNameLabel.lineBreakMode = UILineBreakModeMiddleTruncation;
             cell.printerNameLabel.numberOfLines = 3;
+        }else if(indexPath.section == 0 && self.filteredPrinters.count > 0) {
+            [self setPrinterImage:printers[indexPath.row][@"type"] withImageView:cell.printerImageView];
+            cell.printerLocationLabel.text   = recentPrinters[indexPath.row][@"location"];
+            cell.printerNameLabel.text      = recentPrinters[indexPath.row][@"name"];
+            cell.printerNameLabel.lineBreakMode = UILineBreakModeMiddleTruncation;
+            cell.printerNameLabel.numberOfLines = 2;
+        }else{
+            
         }
         
         [self.tableView setRowHeight:100];
         
-        NSLog(@"Filtering");
     } else {
-        NSLog(@"No filter");
         switch (indexPath.section) {
             case 1:
                 [self setPrinterImage:printers[indexPath.row][@"type"] withImageView:cell.printerImageView];
@@ -336,9 +345,9 @@
             default:
                 break;
         }
+        [self.tableView setRowHeight:78];
 
     }
-    [self.tableView setRowHeight:90];
     return cell;
 }
 
@@ -409,7 +418,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"printerName: %@", self.printerName);
+    // NSLog(@"printerName: %@", self.printerName);
     if (self.jobID == nil){
         [self performSegueWithIdentifier:@"printerToJob" sender:self];
     }
@@ -421,12 +430,17 @@
 - (void)filterContentForSearchText:(NSString*)searchText
 {
 	[self.filteredPrinters removeAllObjects];
+    
+    NSLog(@"Search Text - %@", searchText);
 	
 	for (NSDictionary *p in printers)
 	{
         NSComparisonResult result = [p[@"name"] compare:searchText options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch) range:NSMakeRange(0, [searchText length])];
         
-        if (result == NSOrderedSame) [self.filteredPrinters addObject:p];
+        
+        if (result == NSOrderedSame) {
+            [self.filteredPrinters addObject:p];
+        }
 	}
 
 }
@@ -434,6 +448,7 @@
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {
+    
     [self filterContentForSearchText:searchString];
     return YES;
 }
@@ -444,7 +459,7 @@
     //if ([[segue identifier] isEqualToString:@"selectDocs"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         
-        NSLog(@"Section index = %i", indexPath.section);
+        // NSLog(@"Section index = %i", indexPath.section);
         
         switch (indexPath.section) {
             case 0:

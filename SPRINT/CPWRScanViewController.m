@@ -29,7 +29,7 @@
     
     
     /*  Compuware UEM monitoring start scan action.  */
-    [CompuwareUEM enterAction:@"Start Scan"];
+    [CompuwareUEM enterAction:@"Scan Time"];
 }
 
 
@@ -93,7 +93,10 @@
     // ADD: dismiss the controller (NB dismiss from the *reader*!)
     [reader dismissModalViewControllerAnimated: YES];
     
-    CPWRDocumentsViewController *myNewVC = [[CPWRDocumentsViewController alloc] init];
+    //CPWRDocumentsViewController *myNewVC = [[CPWRDocumentsViewController alloc] init];
+    
+    /*  Compuware UEM leaving start scan action  */
+    [CompuwareUEM leaveAction:@"Scan Time"];
     
     if ([[self jobID] length] >0){
         [self performSegueWithIdentifier: @"printJob" sender: self];
@@ -103,7 +106,7 @@
     }
     
     // do any setup you need for myNewVC
-    [self presentModalViewController:myNewVC animated:YES];
+    //[self presentModalViewController:myNewVC animated:YES];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -113,10 +116,6 @@
         [[segue destinationViewController] setJobID:[self jobID]];
         [[segue destinationViewController] setJobName:[self jobName]];
     }
-    
-    /*  Compuware UEM leaving start scan action  */
-    [CompuwareUEM leaveAction:@"Start Scan"];
-    
 }
 
 
