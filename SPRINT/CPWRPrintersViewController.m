@@ -65,7 +65,7 @@
 {
     
     // Compuware UEM event.  Monitoring load time for printers
-    [CompuwareUEM enterAction:@"Printer list load"];
+    [CompuwareUEM enterAction:@"Printer List load"];
     
     // start the activity indicator in the status bar
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
@@ -160,7 +160,7 @@
     
     
     // Compuware UEM event.  Leaving load printers
-    [CompuwareUEM leaveAction:@"Printer list load"];
+    [CompuwareUEM leaveAction:@"Printer List load"];
     
     /*  Loop through the JSON object to create printers  */
     int i = 0;
