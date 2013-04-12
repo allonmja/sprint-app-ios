@@ -276,9 +276,6 @@
             _printStatusLabel.textColor = [UIColor greenColor];
             _printStatusLabel.text = @"SUCCESS";
             
-            
-            
-            
         } else {
             NSLog(@"Failed to print Job!!! Please try again");
             _printStatusLabel.textColor = [UIColor redColor];

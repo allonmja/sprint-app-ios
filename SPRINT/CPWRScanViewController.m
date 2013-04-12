@@ -123,6 +123,9 @@
 {
     NSLog(@"Cancelled Scanner");
     
+    /*  Compuware UEM leaving start scan action  */
+    [CompuwareUEM leaveAction:@"Scan Time"];
+    
     // ADD: dismiss the controller (NB dismiss from the *reader*!)
     [picker dismissModalViewControllerAnimated: YES];
 }

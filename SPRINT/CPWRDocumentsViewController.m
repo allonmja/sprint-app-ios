@@ -187,11 +187,13 @@
 
 - (void)setDocumentImage:(NSString *)type withImageView:(UIImageView *)image
 {
-    if([type isEqualToString:@"word"])
+    //NSLog(@"image type : %@", type);
+    
+    if([type isEqualToString:@"word"] || [type isEqualToString:@"docx"] || [type isEqualToString:@"doc"])
         [image setImage: [UIImage imageNamed:@"worddoc.png"]];
-    else if([type isEqualToString:@"ppt"])
+    else if([type isEqualToString:@"ppt"] || [type isEqualToString:@"pptx"])
         [image setImage: [UIImage imageNamed:@"pptdoc.png"]];
-    else if([type isEqualToString:@"excel"])
+    else if([type isEqualToString:@"excel"] || [type isEqualToString:@"xls" ] ||[type isEqualToString: @"xlsx"])
         [image setImage: [UIImage imageNamed:@"exceldoc.png"]];
     else if ([type isEqualToString:@"pdf"])
         [image setImage: [UIImage imageNamed:@"pdfdoc.png"]];
@@ -213,10 +215,18 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
+        
+        // Compuware UEM event.  Monitoring deleting jobs.
+        [CompuwareUEM enterAction:@"Delete Job"];
+        
         // Delete the row from the data source
         NSString* jobId = documents[indexPath.row][@"job_id"];
         [self cancelJobPost:jobId];
         [documents removeObject:documents[indexPath.row]];
+        
+        // Compuware UEM event.  Monitoring deleting jobs.
+        [CompuwareUEM leaveAction:@"Delete Job"];
+        
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
@@ -413,7 +423,8 @@
     NSString *job_id;
     
     int i = 0;
-    
+
+    // NSLog(@"Job List:  %@",jsonObject);
     for( NSDictionary *doc in jsonObject)
     {
         mimeType = doc[@"file_type"];
