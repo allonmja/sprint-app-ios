@@ -300,52 +300,68 @@
     CPWRPrintersTableCell *cell = [[self tableView] dequeueReusableCellWithIdentifier:CellIdentifier];
     
     // Configure the cell...
+    
+    //currently location is not used - could be used in the future to hold a description of the printer's
+    //location ex: "admin station" or "near room 6425"
     if(!cell) {
         cell = [[CPWRPrintersTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
+    //check to see if the currently displayed view is the filtered result of a search
     if(tableView == [[self searchDisplayController] searchResultsTableView])
     {
+        //this section will contain a filtered list of available printers
         if (indexPath.section == 1 && self.filteredPrinters.count > 0){
             [self setPrinterImage:self.filteredPrinters[indexPath.row][@"type"] withImageView:cell.printerImageView];
-            //cell.printerLocationLabel.text   = self.filteredPrinters[indexPath.row][@"location"];
-            cell.printerLocationLabel.text   = @"";
-            cell.printerNameLabel.text      = self.filteredPrinters[indexPath.row][@"name"];
+            cell.printerLocationLabel.text   = self.filteredPrinters[indexPath.row][@"location"];
+            
+            //make the label for the printer name human readable, but without changing the underlying model
+            cell.printerNameLabel.text = [self makePrinterNameHumanReadable:self.filteredPrinters[indexPath.row][@"name"]];
             cell.printerNameLabel.lineBreakMode = UILineBreakModeMiddleTruncation;
             cell.printerNameLabel.numberOfLines = 3;
-        }else if(indexPath.section == 0 && self.filteredPrinters.count > 0) {
+        
+        //this section will contain the recent printers regardless of search results
+        }else if(indexPath.section == 0) {
             [self setPrinterImage:printers[indexPath.row][@"type"] withImageView:cell.printerImageView];
             cell.printerLocationLabel.text   = recentPrinters[indexPath.row][@"location"];
-            cell.printerNameLabel.text      = recentPrinters[indexPath.row][@"name"];
+            
+            //make the label for the printer name human readable, but without changing the underlying model
+            cell.printerNameLabel.text      = [self makePrinterNameHumanReadable:recentPrinters[indexPath.row][@"name"]];
             cell.printerNameLabel.lineBreakMode = UILineBreakModeMiddleTruncation;
             cell.printerNameLabel.numberOfLines = 2;
         }else{
             
         }
         
-        [self.tableView setRowHeight:100];
+        [self.tableView setRowHeight:60];
         
     } else {
         switch (indexPath.section) {
+            //this section will contain a list with all available network printers
             case 1:
                 [self setPrinterImage:printers[indexPath.row][@"type"] withImageView:cell.printerImageView];
                 cell.printerLocationLabel.text   = printers[indexPath.row][@"location"];
-                cell.printerNameLabel.text      = printers[indexPath.row][@"name"];
+                
+                //make the label for the printer name human readable, but without changing the underlying model
+                cell.printerNameLabel.text = [self makePrinterNameHumanReadable:printers[indexPath.row][@"name"]];
                 cell.printerNameLabel.lineBreakMode = UILineBreakModeMiddleTruncation;
                 cell.printerNameLabel.numberOfLines = 2;
                 break;
                 
+            //this section will contain a list with recent printers
             case 0:
                 [self setPrinterImage:printers[indexPath.row][@"type"] withImageView:cell.printerImageView];
                 cell.printerLocationLabel.text   = recentPrinters[indexPath.row][@"location"];
-                cell.printerNameLabel.text      = recentPrinters[indexPath.row][@"name"];
+                
+                //make the label for the printer name human readable, but without changing the underlying model
+                cell.printerNameLabel.text = [self makePrinterNameHumanReadable:recentPrinters[indexPath.row][@"name"]];
                 cell.printerNameLabel.lineBreakMode = UILineBreakModeMiddleTruncation;
                 cell.printerNameLabel.numberOfLines = 2;
                 break;
             default:
                 break;
         }
-        [self.tableView setRowHeight:78];
+        [self.tableView setRowHeight:60];
 
     }
     return cell;
@@ -582,6 +598,73 @@
 	
 }
 
+- (NSString*) makePrinterNameHumanReadable:(NSString*) codedName {
+    
+    //if the scan was not successful, or returned a string longer or shorter than expected
+    if(codedName == nil || [codedName length] < 6) {
+        return nil;
+    }
+    
+    NSString *humanReadableName;
+    
+    //Set the building wing
+    if( [[codedName substringWithRange:(NSMakeRange(0, 1))] localizedCaseInsensitiveCompare:@"w"] == NSOrderedSame) {
+        //woodward
+        humanReadableName = @"Woodward, ";
+    } else {
+        if( [[codedName substringWithRange:(NSMakeRange(0, 1))] localizedCaseInsensitiveCompare:@"m"] == NSOrderedSame ) {
+            //monroe
+            humanReadableName = @"Monroe, ";
+        } else {
+            if( [[codedName substringWithRange:(NSMakeRange(0, 1))] localizedCaseInsensitiveCompare:@"c"] == NSOrderedSame ) {
+                //center
+                humanReadableName = @"Center, ";
+            } else { return nil;}
+        }
+    }
+    
+    //set the floor
+    NSString *sFloor = [codedName substringWithRange:(NSMakeRange(1, 3))];
+    
+    //set a default to the floor to help catch int parse errors later
+    int floor = 0;
+    @try {
+        floor = sFloor.intValue;
+    }
+    @catch(NSException *e) {
+        NSLog(@"makePrinterNameHumanReadable-floor %@", e.description);
+    }
+    
+    if(floor == 0) {
+        //no-op.  keep human readable floor without adding a value since Integer.parse failed.
+    } else {
+        sFloor = [NSString stringWithFormat:@"%d", floor];
+        sFloor = [sFloor stringByAppendingString:@" "];
+        sFloor = [sFloor stringByAppendingString:humanReadableName];
+        humanReadableName = sFloor;
+    }
+
+    //set the printer number
+    
+    NSString *sPrinter = [codedName substringWithRange:(NSMakeRange(4, 6))];
+    int printer = 0;
+    @try {
+        printer = sPrinter.intValue;
+    }
+    @catch(NSException *e) {
+        NSLog(@"makePrinterNameHumanReadable-printer %@", e.description);
+    }
+    
+    if(printer == 0) {
+        //no-op.  keep human readable floor without adding a value since Integer.parse failed.
+    } else {
+        humanReadableName = [humanReadableName stringByAppendingString:@"Printer "];
+        humanReadableName = [humanReadableName stringByAppendingString:[NSString stringWithFormat:@"%d", printer]];
+    }
+    
+    
+    return humanReadableName;
+}
 
 
 @end
