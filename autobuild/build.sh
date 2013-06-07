@@ -39,7 +39,7 @@ if [ "$Target" == "SPRINT" ]; then
     # If you created a configuration for each environment (development, test, customer production)
     # You may need a separate configuration created to build against our internal servers (or for any specific environment)
     if [ "$Config" == "AutobuildRelease" ]; then
-        /usr/bin/xcrun -sdk iphoneos PackageApplication -v $WORKSPACE/build.sym/${Config}-iphoneos/${Target}.app -o $WORKSPACE/build.sym/${Config}-iphoneos/${Target}.ipa --sign "iPhone Distribution: Compuware Corporation" --embed ~/Downloads/Enterprise.mobileprovision mv $WORKSPACE/build.sym/${Config}-iphoneos/${Target}.ipa ${WORKSPACE}/sprintapp.ipa
+        /usr/bin/xcrun -sdk iphoneos PackageApplication -v $WORKSPACE/build.sym/${Config}-iphoneos/${Target}.app -o $WORKSPACE/build.sym/${Config}-iphoneos/${Target}.ipa --sign "iPhone Distribution: Compuware Corporation" --embed ~/Downloads/Enterprise.mobileprovision mv $WORKSPACE/build.sym/${Config}-iphoneos/${Target}.ipa ${WORKSPACE}/SPRINT.ipa
     fi
 fi
 
