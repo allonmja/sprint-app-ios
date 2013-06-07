@@ -83,13 +83,13 @@
 		29A970E317173FFB00649F53 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 29A970E217173FFB00649F53 /* Default-568h@2x.png */; };
 		29DB4EAA170E4D3B0098C6E0 /* CPWRPrefsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29DB4EA8170E4D3B0098C6E0 /* CPWRPrefsViewController.m */; };
 		29EE8E8B170E4C6F007BB885 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 29EE8E89170E4C6F007BB885 /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B09CD0E317624ED800093EC3 /* libCompuwareUEM.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1F435F617160DD200B7A8B2 /* libCompuwareUEM.a */; };
 		B188D3211714BF0E00AE9E91 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B188D3201714BF0E00AE9E91 /* SystemConfiguration.framework */; };
 		B188D3271714C0B000AE9E91 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B188D3261714C0B000AE9E91 /* CoreLocation.framework */; };
 		B188D3291714C0C300AE9E91 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B188D3281714C0C300AE9E91 /* CoreTelephony.framework */; };
 		B188D32B1714C0D300AE9E91 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B188D32A1714C0D300AE9E91 /* Security.framework */; };
 		B188D32C1714C0E100AE9E91 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 293F6831170EFAF800C81652 /* libz.dylib */; };
 		B1F435F51715FE2600B7A8B2 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1F435F31715FE2600B7A8B2 /* MainStoryboard_iPhone.storyboard */; };
-		B1F435F917160E1600B7A8B2 /* libCompuwareUEM.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1F435F817160E1600B7A8B2 /* libCompuwareUEM.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -224,7 +224,6 @@
 		B188D32A1714C0D300AE9E91 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		B1F435F41715FE2600B7A8B2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		B1F435F617160DD200B7A8B2 /* libCompuwareUEM.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCompuwareUEM.a; sourceTree = "<group>"; };
-		B1F435F817160E1600B7A8B2 /* libCompuwareUEM.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCompuwareUEM.a; path = ../../libCompuwareUEM.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -232,7 +231,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B1F435F917160E1600B7A8B2 /* libCompuwareUEM.a in Frameworks */,
+				B09CD0E317624ED800093EC3 /* libCompuwareUEM.a in Frameworks */,
 				B188D32C1714C0E100AE9E91 /* libz.dylib in Frameworks */,
 				B188D32B1714C0D300AE9E91 /* Security.framework in Frameworks */,
 				B188D3291714C0C300AE9E91 /* CoreTelephony.framework in Frameworks */,
@@ -600,7 +599,6 @@
 		B13CF3BC1714A3D300286B8A /* CompuwareUEM */ = {
 			isa = PBXGroup;
 			children = (
-				B1F435F817160E1600B7A8B2 /* libCompuwareUEM.a */,
 				B1F435F617160DD200B7A8B2 /* libCompuwareUEM.a */,
 				B188D3241714C08C00AE9E91 /* CompuwareUEM.h */,
 				B188D3251714C08C00AE9E91 /* CPWRLog.h */,
@@ -892,6 +890,65 @@
 			};
 			name = Release;
 		};
+		B09CD0E117624D5900093EC3 /* AutobuildRelease */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				WARNING_LDFLAGS = "";
+			};
+			name = AutobuildRelease;
+		};
+		B09CD0E217624D5900093EC3 /* AutobuildRelease */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SPRINT/SPRINT-Prefix.pch";
+				INFOPLIST_FILE = "SPRINT/SPRINT-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(SRCROOT)/SPRINT/ZBarSDK\"",
+					"\"$(SRCROOT)/SPRINT\"",
+					"$(Inherited)",
+					"\"$(SRCROOT)/../../../../../Downloads/dynatrace-mobile-adk-5.0.0.3772/iOS/adk\"",
+					"\"$(SRCROOT)/../../../../../Downloads/dynatrace-mobile-adk-5.0.0.3772(1)/iOS/adk\"",
+					"\"$(SRCROOT)/..\"",
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
+				"OTHER_LDFLAGS[arch=*]" = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALIDATE_PRODUCT = NO;
+				VALID_ARCHS = "armv7 armv7s x86_64";
+				WRAPPER_EXTENSION = app;
+			};
+			name = AutobuildRelease;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -900,6 +957,7 @@
 			buildConfigurations = (
 				291E6FDA170E49730055E770 /* Debug */,
 				291E6FDB170E49730055E770 /* Release */,
+				B09CD0E117624D5900093EC3 /* AutobuildRelease */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -909,6 +967,7 @@
 			buildConfigurations = (
 				291E6FDD170E49730055E770 /* Debug */,
 				291E6FDE170E49730055E770 /* Release */,
+				B09CD0E217624D5900093EC3 /* AutobuildRelease */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
