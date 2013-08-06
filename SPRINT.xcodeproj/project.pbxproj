@@ -882,7 +882,6 @@
 					"-ObjC",
 					"-all_load",
 				);
-				"OTHER_LDFLAGS[arch=*]" = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VALIDATE_PRODUCT = NO;
 				VALID_ARCHS = "armv7 armv7s x86_64";
@@ -941,7 +940,6 @@
 					"-ObjC",
 					"-all_load",
 				);
-				"OTHER_LDFLAGS[arch=*]" = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VALIDATE_PRODUCT = NO;
 				VALID_ARCHS = "armv7 armv7s x86_64";
